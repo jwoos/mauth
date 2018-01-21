@@ -1,4 +1,4 @@
-package main
+package otp
 
 
 import (
@@ -6,6 +6,11 @@ import (
 	"crypto/sha1"
 	"crypto/hmac"
 )
+
+
+type OTP interface {
+	Generate() uint
+}
 
 
 func uint64ToByte(num uint64) []byte {
