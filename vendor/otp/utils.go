@@ -15,7 +15,7 @@ type OTP interface {
 
 func uint64ToByte(num uint64) []byte {
 	byteArr := make([]byte, 8)
-	binary.LittleEndian.PutUint64(byteArr, num)
+	binary.BigEndian.PutUint64(byteArr, num)
 
 	return byteArr
 }

@@ -2,7 +2,6 @@ package otp
 
 
 import (
-	"math"
 	"time"
 )
 
@@ -25,7 +24,7 @@ func (totp *TOTP) New(counter uint64, secret string, base32 bool, length uint8, 
 }
 
 
-func (totp *TOTP) Generate() uint {
+func (totp *TOTP) Generate() string {
 	totp.Hotp.Counter = (uint64(time.Now().Unix()) / uint64(totp.Timestep))
 
 	return totp.Hotp.Generate()

@@ -3,6 +3,7 @@ package otp
 
 import (
 	"encoding/base32"
+	"fmt"
 	"math"
 )
 
@@ -16,20 +17,27 @@ type HOTP struct {
 }
 
 
-func (hotp *HOTP) New(counter uint64, secret string, base32 bool, length uint8) {
+func (hotp *HOTP) New(counter uint64, secret string, isBase32 bool, length uint8) error {
 	hotp.Counter = counter
 	hotp.Length = length
 
-	if base32 {
+	if isBase32 {
 		hotp.Base32Secret = secret
-		hotp.Secret = string(base32.StdEncoding.DecodeString(secret))
+		str, err := base32.StdEncoding.DecodeString(secret)
+		if err != nil {
+			return err
+		}
+
+		hotp.Secret = string(str)
 	} else {
 		hotp.Secret = secret
 	}
+
+	return nil
 }
 
 // [RFC4226 5.3]
-func (hotp *HOTP) Generate() uint {
+func (hotp *HOTP) Generate() string {
 	// step 1: Generate an HMAC-SHA-1 value Let HS = HMAC-SHA-1(K,C)
 	hash := hmacSha1([]byte(hotp.Secret), uint64ToByte(hotp.Counter))
 
@@ -42,5 +50,11 @@ func (hotp *HOTP) Generate() uint {
 	truncatedHashNum := dynamicTruncation(hash)
 
 	// Return D = Snum mod 10^Digit
-	return truncatedHashNum % uint(math.Pow10(int(hotp.Length)))
+	d := truncatedHashNum % uint(math.Pow10(int(hotp.Length)))
+
+	lengthFormatter := fmt.Sprintf("%%0%dd", hotp.Length)
+
+	defer func() {hotp.Counter++}()
+
+	return fmt.Sprintf(lengthFormatter, d)
 }
