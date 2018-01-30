@@ -16,3 +16,5 @@
 # swap files
 *.swo
 *.swp
+
+go_otp
