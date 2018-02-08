@@ -11,31 +11,21 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func usage() {
-	fmt.Println("Usage: otp [action]")
-	fmt.Println("	action - get|add|delete|edit")
-}
-
-func checkError(err error, msg string) {
-	if err != nil {
-		fmt.Println(msg)
-		os.Exit(1)
-	}
-}
-
-func get() {
-}
-
 func main() {
-	/*
-	 *var typeFlag string
-	 *flag.StringVar(&typeFlag, "type", "", "The type of OTP ")
-	 */
+	var commandFlag string
+	flag.StringVar(&commandFlag, "command", "g", "The type of action, default is (g)et with options for (a)dd, (e)dit, and (d)elete")
 
-	/*
-	 *var actionFlag string
-	 *flag.StringVar(&actionFlag, "action"))
-	 */
+	var userFlag string
+	flag.StringVar(&actionFlag, "user", "", "The username to specify"))
+
+	var debugFlag bool
+	flag.BoolVar(&debugFlag, "debug", false, "Specify whether in debugging mode or not")
+
+	var verboseFlag bool
+	flag.BoolVar(&verboseFlag, "verbose", false, "Print out more things than usual")
+
+	var dbPath string
+	flag.StringVar(&dbPath. "db", "./accounts.db", "The path of the file to use")
 
 	flag.Parse()
 
@@ -46,30 +36,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	database, err := sql.Open("sqlite3", "./otp.db")
-	checkError(err, "Error opening database")
+	/*
+	 *db, err := initDB()
+	 *checkError(err, "Error initializing database")
+	 */
 
-	statement, err := database.Prepare(`CREATE TABLE IF NOT EXISTS account (
-		id INTEGER PRIMARY KEY,
-		username TEXT,
-		secret TEXT,
-		type INTEGER,
-		length INTEGER,
-		timestep INTEGER,
-		base32 BOOLEAN,
-		description TEXT
-	)`)
-	checkError(err, "Error preparing statement")
+	account := positionalArgs[0]
 
-	statement.Exec()
-
-	switch action := positionalArgs[0]; action {
+	switch commandFlag {
 	case "get":
 	case "add":
 	case "delete":
 	case "edit":
-	default:
-		usage()
-		os.Exit(1)
 	}
 }

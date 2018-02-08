@@ -16,3 +16,15 @@ go get github.com/jwoos/go_auth
 ```
 
 This will pull the package, compile and drop the executable `go_auth` in `$GOPATH/bin`
+
+## Usage
+```
+go_auth [options] ACCOUNT
+```
+`ACTION`
+- `get`: Display an account
+- `add`: Add an account
+- `edit`: Edit an account
+- `delete`: Delete an account
+
+`ACCOUNT`: the exact account name or a search
