@@ -9,7 +9,7 @@ import (
 
 
 type OTP interface {
-	Generate() uint
+	Generate() string
 }
 
 

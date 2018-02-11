@@ -17,7 +17,8 @@ type HOTP struct {
 }
 
 
-func (hotp *HOTP) New(counter uint64, secret string, isBase32 bool, length uint8) error {
+func HOTPNew(counter uint64, secret string, isBase32 bool, length uint8) (*HOTP, error) {
+	var hotp HOTP
 	hotp.Counter = counter
 	hotp.Length = length
 
@@ -25,7 +26,7 @@ func (hotp *HOTP) New(counter uint64, secret string, isBase32 bool, length uint8
 		hotp.Base32Secret = secret
 		str, err := base32.StdEncoding.DecodeString(secret)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		hotp.Secret = string(str)
@@ -33,7 +34,7 @@ func (hotp *HOTP) New(counter uint64, secret string, isBase32 bool, length uint8
 		hotp.Secret = secret
 	}
 
-	return nil
+	return &hotp, nil
 }
 
 // [RFC4226 5.3]
