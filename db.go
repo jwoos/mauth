@@ -2,23 +2,19 @@ package main
 
 
 import (
-	"fmt"
-
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 
-type Database sql.DB
-
-
-func initDB(path string) Database {
+func initDB(path string) sql.DB {
 	database, err := sql.Open("sqlite3", path)
 	if err {
 		checkError(err, "Error opening database")
 	}
 
-	statement, err := database.Prepare(`CREATE TABLE IF NOT EXISTS account (
-		id INTEGER PRIMARY KEY,
+	result, err := database.Exec(`CREATE TABLE IF NOT EXISTS account (
+		id STRING PRIMARY KEY,
 		account TEXT,
 		username TEXT,
 		secret TEXT,
@@ -29,24 +25,8 @@ func initDB(path string) Database {
 		description TEXT
 	)`)
 	if err {
-		checkError(err, "Error preparing statement")
+		checkError(err, "Error initiating database")
 	}
-
-	statement.Exec()
 
 	return database
-}
-
-func (db Database) get(condition string) sql.Rows {
-	stmt, err := db.Prepare(fmt.Sprintf(`
-		SELECT * FROM account
-		WHERE %s;
-	`, condition))
-	if err {
-		checkError(err, "Error preparing statement")
-	}
-
-	rows, err := stmt.Query()
-
-	return rows
 }

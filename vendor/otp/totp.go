@@ -18,10 +18,10 @@ type TOTP struct {
 }
 
 
-func TOTPNew(counter uint64, secret string, base32 bool, length uint8, timestep uint8) (*TOTP, error) {
+func TOTPNew(secret string, base32 bool, length uint8, timestep uint8) (*TOTP, error) {
 	var totp TOTP
 	totp.Timestep = timestep
-	hotp, err := HOTPNew(counter, secret, base32, length)
+	hotp, err := HOTPNew(0, secret, base32, length)
 	if err != nil {
 		return nil, err
 	}
