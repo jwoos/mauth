@@ -32,7 +32,10 @@ func add() {
 	}
 
 	uuid, err := uuid.NewV4()
-	account := accountNew(uuid, username, accountName, description, otp)
+	account := accountNew(uuid, username, accountName, description, hashType, otp)
+
+	// commit
+	account.save();
 }
 
 func get() {

@@ -15,10 +15,10 @@ func initDB(path string) sql.DB {
 
 	result, err := database.Exec(`CREATE TABLE IF NOT EXISTS account (
 		id STRING PRIMARY KEY,
-		account TEXT,
-		username TEXT,
-		secret TEXT,
-		type INTEGER,
+		account TEXT NOT NULL,
+		username TEXT NOT NULL,
+		secret TEXT NOT NULL,
+		type INTEGER NOT NULL,
 		length INTEGER,
 		timestep INTEGER,
 		base32 BOOLEAN,
