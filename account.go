@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"database/sql"
 
-	"otp"
+	"github.com/jwoos/go_auth/otp"
 )
 
 

@@ -18,3 +18,4 @@
 *.swp
 
 go_otp
+vendor/

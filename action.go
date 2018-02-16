@@ -6,7 +6,7 @@ import (
 
 	"otp"
 
-	"satori/go.uuid"
+	"github.com/satori/go.uuid"
 )
 
 
