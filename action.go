@@ -3,12 +3,63 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
-	"otp"
+	"github.com/jwoos/go_auth/otp"
 
 	"github.com/satori/go.uuid"
 )
 
+
+func show([]string args) {
+	if len(args) == 2 {
+		rows, err := db.Query(`SELECT * FROM accounts WHERE id=$1`, args[1])
+		checkError(err)
+
+		defer rows.Close()
+
+		s := AccountQuery{}
+
+		err := rows.Scan(&s)
+		checkError(err)
+
+		fmt.Println(s)
+	} else {
+		rows, err := db.Query(`SELECT * FROM accounts`)
+		checkError(err)
+
+		defer rows.Close()
+
+		var str strings.Builder
+
+		for rows.Next() {
+			s := AccountQuery{}
+
+			err := rows.Scan(&s)
+			checkError(err)
+
+			str.WriteString(s.String())
+		}
+
+		fmt.Println(str)
+	}
+}
+
+func get([]string args) {
+	if len(args) < 2 {
+		usage(true)
+	}
+
+	rows, err := db.Query(`SELECT * FROM accounts WHERE id=$1`, args[1])
+	checkError(err)
+
+	defer rows.Close()
+
+	s := AccountQuery{}
+
+	err := rows.Scan(&s)
+	checkError(err)
+}
 
 func add() {
 	accountName := read("Account name: ")
@@ -36,9 +87,6 @@ func add() {
 
 	// commit
 	account.save();
-}
-
-func get() {
 }
 
 func edit() {

@@ -8,9 +8,13 @@ import (
 )
 
 
-func usage() {
-	fmt.Println("Usage: go_auth [--debug] [--db=DB] [ACTION]")
-	fmt.Println("	ACTION: get|add|delete|edit")
+func usage(bool exit) {
+	fmt.Println("Usage: go_auth [--debug] [ACTION]")
+	fmt.Println("	ACTION: show|get|add|delete|edit")
+
+	if exit {
+		os.Exit(1)
+	}
 }
 
 func checkError(err error, msg string) {

@@ -17,9 +17,8 @@ func main() {
 
 	positionalArgs := flag.Args()
 
-	if len(positionalArgs) != 1 {
-		usage()
-		os.Exit(1)
+	if len(positionalArgs) < 1 || len(positionalArgs) > 2 {
+		usage(true)
 	}
 
 	db, err := initDB()
@@ -28,17 +27,18 @@ func main() {
 	command := positionalArgs[0]
 
 	switch command {
+	case "show":
+		show(positionalArgs)
 	case "get":
-		get()
+		get(positionalArgs)
 	case "add":
 		add()
 	case "delete":
-		del()
+		del(positionalArgs)
 	case "edit":
-		edit()
+		edit(positionalArgs)
 	default:
 		fmt.Println("Invalid command")
-		usage()
-		os.Exit(1)
+		usage(true)
 	}
 }

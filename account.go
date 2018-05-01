@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"database/sql"
+	"strings"
 
 	"github.com/jwoos/go_auth/otp"
 )
@@ -32,6 +33,27 @@ func accountNew(id string, username string, account string, description string, 
 	acct.otp = otp
 
 	return &acct
+}
+
+func accountNewFromQuery(AccountQuery query) *Account {
+}
+
+func (acct *Account) String() {
+	var str strings.Builder
+
+	str.WriteString(fmt.Sprintf("ID: %d\n", acct.id))
+
+	if acct.hashType == TYPE_HASH {
+		str.WriteString("Type: HOTP\n")
+	} else {
+		str.WriteString("Type: TOTP\n")
+	}
+
+	str.WriteString(fmt.Sprintf("Account: %s\n", acct.account))
+
+	str.WriteString(fmt.Sprintf("Username: %s\n", acct.username))
+
+	return str.String()
 }
 
 func (acct *Account) show() {

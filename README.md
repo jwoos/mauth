@@ -22,9 +22,10 @@ This will pull the package, compile and drop the executable `go_auth` in `$GOPAT
 go_auth [options] ACCOUNT
 ```
 `ACTION`
-- `get`: Display an account
+- `show <ACCOUNT_ID>`: Show all the accounts available
+- `get <ACCOUNT_ID>`: Display an account
 - `add`: Add an account
-- `edit`: Edit an account
-- `delete`: Delete an account
+- `edit <ACCOUNT_ID>`: Edit an account
+- `delete <ACCOUNT_ID>`: Delete an account
 
 `ACCOUNT`: the exact account name or a search
