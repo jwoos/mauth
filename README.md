@@ -1,4 +1,7 @@
 # Go Auth
+
+*Incomplete* - I decided to move onto other projects, content with having implemented the protocols and tested that they work. Turns out making programs that are intuitive to use is a lot more work than I wanted for a project like this.
+
 This is a command line program that is meant to serve as a drop in replacement for OTP apps such as Google Authenticator or Authy. HOTP (RFC 4226) and TOTP (RFC 6238) are supported, each supporting base32 encoded secrets as well as differing length of the passwords.
 
 ## Why?
@@ -18,6 +21,16 @@ go get github.com/jwoos/go_auth
 This will pull the package, compile and drop the executable `go_auth` in `$GOPATH/bin`
 
 ## Usage
+
+### As a library
+Just import 
+```
+import github.com/jwoos/go_auth/otp
+```
+
+### As a CLI program
+Maybe someday...
+
 ```
 go_auth [options] ACCOUNT
 ```
